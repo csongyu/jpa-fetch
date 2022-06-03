@@ -55,7 +55,10 @@ public class CompanyDaoImplTest {
         final Set<Company> companies =
             this.companyDao.findByIdsWithUsers(new HashSet<>(Arrays.asList("csongyu.xyz", "csongyu.icu")));
         log.info("########## @OneToMany LAZY retrieve collection ##########");
-        assertNotNull(companies);
         assertEquals(2, companies.size());
+        final Company xyz =
+            companies.stream().filter(company -> "csongyu.xyz".equals(company.getCode())).findFirst().orElse(null);
+        assertNotNull(xyz);
+        assertEquals(3, xyz.getEmployees().size());
     }
 }
