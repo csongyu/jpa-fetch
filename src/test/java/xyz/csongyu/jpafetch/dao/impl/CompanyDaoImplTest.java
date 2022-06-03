@@ -3,6 +3,10 @@ package xyz.csongyu.jpafetch.dao.impl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +31,8 @@ public class CompanyDaoImplTest {
 
     @BeforeEach
     public void before() {
-        this.dataPatchService.patchData("csongyu.xyz", 8, 2);
+        this.dataPatchService.patchData("csongyu.xyz", 3, 2);
+        this.dataPatchService.patchData("csongyu.icu", 2, 2);
     }
 
     @AfterEach
@@ -41,6 +46,16 @@ public class CompanyDaoImplTest {
         final Company company = this.companyDao.findByIdWithUsers("csongyu.xyz");
         log.info("########## @OneToMany LAZY retrieve collection ##########");
         assertNotNull(company);
-        assertEquals(8, company.getEmployees().size());
+        assertEquals(3, company.getEmployees().size());
+    }
+
+    @Test
+    public void testFindByIdsWithUsers() {
+        log.info("########## @OneToMany LAZY retrieve collection ##########");
+        final Set<Company> companies =
+            this.companyDao.findByIdsWithUsers(new HashSet<>(Arrays.asList("csongyu.xyz", "csongyu.icu")));
+        log.info("########## @OneToMany LAZY retrieve collection ##########");
+        assertNotNull(companies);
+        assertEquals(2, companies.size());
     }
 }

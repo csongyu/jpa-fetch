@@ -1,5 +1,7 @@
 package xyz.csongyu.jpafetch.dao.impl;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -28,8 +30,19 @@ public class CompanyDaoImpl implements CompanyDao {
         final Optional<Company> company = this.repository.findById(id);
         company.ifPresent(entity -> {
             final Set<Employee> employees = entity.getEmployees();
-            log.info("company {} has {} employees", id, employees.size());
+            log.info("company {} has {} employees", entity.getCode(), employees.size());
         });
         return company.orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public Set<Company> findByIdsWithUsers(final Set<String> ids) {
+        final List<Company> companies = this.repository.findAllById(ids);
+        companies.forEach(company -> {
+            final Set<Employee> employees = company.getEmployees();
+            log.info("company {} has {} employees", company.getCode(), employees.size());
+        });
+        return new HashSet<>(companies);
     }
 }
