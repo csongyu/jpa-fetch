@@ -18,6 +18,6 @@ public class Company implements Serializable {
 
     private String name;
 
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Employee> employees = new HashSet<>();
 }

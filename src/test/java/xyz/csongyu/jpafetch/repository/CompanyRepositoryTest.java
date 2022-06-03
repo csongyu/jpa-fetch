@@ -1,6 +1,7 @@
 package xyz.csongyu.jpafetch.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.*;
 
@@ -54,5 +55,9 @@ public class CompanyRepositoryTest {
             this.companyRepository.findByIdsWithUsers(new HashSet<>(Arrays.asList("csongyu.xyz", "csongyu.icu")));
         log.info("########## @OneToMany JOIN FETCH ##########");
         assertEquals(2, companies.size());
+        final Company xyz =
+            companies.stream().filter(company -> "csongyu.xyz".equals(company.getCode())).findFirst().orElse(null);
+        assertNotNull(xyz);
+        assertEquals(3, xyz.getEmployees().size());
     }
 }
