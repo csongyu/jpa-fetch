@@ -24,11 +24,11 @@ public class SimpleDataPatchService {
         final Set<Employee> employees = IntStream.range(0, employeeSize).mapToObj(i -> {
             final Employee employee = new Employee();
             employee.setName("employee-" + i);
-            employee.setCode("employee-" + i);
+            employee.setCode(companyCode + "-employee-" + i);
             employee.setCompany(company);
             final Set<Car> cars = IntStream.range(0, carSize).mapToObj(j -> {
                 final Car car = new Car();
-                car.setPlate("car-" + i + "-" + j);
+                car.setPlate(employee.getCode() + "-car-" + i + "-" + j);
                 car.setName("car-" + i + "-" + j);
                 car.setEmployee(employee);
                 return car;

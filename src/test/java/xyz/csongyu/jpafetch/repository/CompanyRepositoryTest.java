@@ -2,9 +2,7 @@ package xyz.csongyu.jpafetch.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +28,8 @@ public class CompanyRepositoryTest {
 
     @BeforeEach
     public void before() {
-        this.dataPatchService.patchData("csongyu.xyz", 8, 2);
+        this.dataPatchService.patchData("csongyu.xyz", 3, 2);
+        this.dataPatchService.patchData("csongyu.icu", 2, 2);
     }
 
     @AfterEach
@@ -45,6 +44,15 @@ public class CompanyRepositoryTest {
         log.info("########## @OneToMany JOIN FETCH ##########");
         final Set<Employee> employees =
             Optional.ofNullable(company).map(Company::getEmployees).orElse(Collections.emptySet());
-        assertEquals(8, employees.size());
+        assertEquals(3, employees.size());
+    }
+
+    @Test
+    public void testFindByIdsWithUsers() {
+        log.info("########## @OneToMany JOIN FETCH ##########");
+        final Set<Company> companies =
+            this.companyRepository.findByIdsWithUsers(new HashSet<>(Arrays.asList("csongyu.xyz", "csongyu.icu")));
+        log.info("########## @OneToMany JOIN FETCH ##########");
+        assertEquals(2, companies.size());
     }
 }
