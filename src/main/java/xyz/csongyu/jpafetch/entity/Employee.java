@@ -20,6 +20,7 @@ public class Employee implements Serializable {
     @Column(nullable = false, unique = true)
     private String code;
 
+    // whatever FetchType is LAZY or EAGER
     @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
 }

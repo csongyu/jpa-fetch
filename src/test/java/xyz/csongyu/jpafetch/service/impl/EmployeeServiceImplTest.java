@@ -22,7 +22,7 @@ import xyz.csongyu.jpafetch.repository.EmployeeRepository;
 @SpringBootTest
 @ActiveProfiles(value = {"test"})
 public class EmployeeServiceImplTest {
-    protected static final int EMPLOYEE_SIZE = 1_000;
+    protected static final int EMPLOYEE_SIZE = 3;
 
     protected static final List<String> CITY = Arrays.asList("XA", "GZ", "HK");
 
